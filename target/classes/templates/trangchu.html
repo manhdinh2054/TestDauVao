@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/giaodien.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<body>
+<div class="sidebar">
+    <div>
+        <img src="/images/logo.png" width="150" height="150" class="logo">
+    </div>
+    <ul class="function-list">
+        <li class="function-list"><a href="#a">Quản lý học kỳ - block</a></li>
+        <li class="function-list"><a href="#b">Quản lý bộ môn</a></li>
+        <li class="function-list"><a href="#c">Quản lý cơ sở</a></li>
+        <li class="function-list"><a href="#d">Quản lý chức vụ</a></li>
+        <li class="function-list"><a th:href="@{/trangchu/staff}">Quản lý nhân viên</a></li>
+        <li class="function-list"><a href="#f">Quản lý lớp môn</a></li>
+        <li class="function-list"><a href="#g">Quản lý môn học</a></li>
+        <li class="function-list"><a href="#h">Quản lý phòng thi</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <div>
+        <div class="thongtincanhan">
+            <img src="#" class="logo">
+            <span>Xin chào</span>
+        </div>
+    </div>
+    <div class="content1">
+        <h3>Quản lí nhân viên</h3>
+        <div class="border locdanhsach">
+            <div>
+                <img src="">
+                <span>Bộ lọc</span>
+            </div>
+            <div class="boloc">
+                <div>
+                    <span>Tìm Kiếm</span><br>
+                    <input type="text" class="form-control" style="width: 400px">
+                </div>
+                <div class="boloc1">
+                    <span>Trạng thái</span><br>
+                    <select class="form-select" style="width: 400px">
+                        <option value="">Tất cả</option>
+                        <option value="">Đang Hoạt động</option>
+                        <option value="">Ngừng Hoạt Động</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="formtable0">
+            <div class="formtable">
+                <div class="d-flex">
+                    <img src="" alt="" srcset="">
+                    <h3>danh sách nhân viên</h3>
+                </div>
+                <div class="formtable1">
+                    <button class="btn btn-primary">import nhân viên</button>
+                    <button class="btn btn-primary">Download nhân viên</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Thêm nhân viên</button>
+                    <button class="btn btn-primary">Xem lịch sử import</button>
+                </div>
+            </div>
+            <table class="table table">
+                <thead>
+                <tr>
+                    <th>SST</th>
+                    <th>Mã nhân viên</th>
+                    <th>Tên nhân viên</th>
+                    <th>Email FPT</th>
+                    <th>Email FE</th>
+                    <th>Trạng thái</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody id="table-body" th:each="staff1,stat :${staffPage.content}">
+                <td th:text="${stat.index+1}"></td>
+                <td th:text="${staff1.staffCode}"></td>
+                <td th:text="${staff1.name}"></td>
+                <td th:text="${staff1.accountFpt}"></td>
+                <td th:text="${staff1.accountFe}"></td>
+                <td th:text="${staff1.status} == 1 ? 'Đang hoạt động':'Không hoạt động'"></td>
+                <td>
+                    <a th:href="@{#}">Chỉnh Sửa</a>
+                    <a th:href="@{#}">Xóa</a>
+                    <a th:href="@{#}">Chi Tiết</a>
+                </td>
+
+                </tbody>
+            </table>
+            <div>
+                <span th:if="${staffPage.hasPrevious()}">
+                    <a th:href="@{/trangchu/staff(page=${staffPage.number - 1}, size=${staffPage.size})}">Previous</a>
+                </span>
+                <span th:each="i : ${#numbers.sequence(1, staffPage.totalPages)}">
+                    <a th:href="@{/trangchu/staff(page=${i - 1}, size=${staffPage.size})}"
+                       th:text="${i}">1</a>
+                </span>
+                <span th:if="${staffPage.hasNext()}">
+                    <a th:href="@{/trangchu/staff(page=${staffPage.number + 1}, size=${staffPage.size})}">Next</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="myModalLabel">Thêm Nhân Viên</h2>
+                <!-- Close button -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm" class="form-control" method="post" th:action="@{/trangchu/staff-add}">
+                    <div class="mb-3">
+                        <label for="staffCode" class="form-label">Mã nhân viên:</label>
+                        <input class="form-control" type="text" id="staffCode" name="staffCode" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Tên:</label>
+                        <input class="form-control" type="text" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="accountFpt" class="form-label">Tài khoản FPT:</label>
+                        <input class="form-control" type="text" id="accountFpt" name="accountFpt" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="accountFe" class="form-label">Tài khoản FE:</label>
+                        <input class="form-control" type="text" id="accountFe" name="accountFe" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Trạng thái:</label>
+                        <select id="status" name="status" class="form-select" required>
+                            <option value="1">Đang Hoạt Động</option>
+                            <option value="0">Ngưng Hoạt Động</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
