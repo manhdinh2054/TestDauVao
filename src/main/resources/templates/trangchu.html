@@ -87,25 +87,33 @@
                 <td th:text="${staff1.accountFe}"></td>
                 <td th:text="${staff1.status} == 1 ? 'Đang hoạt động':'Không hoạt động'"></td>
                 <td>
-                    <a th:href="@{/trangchu/staffedit/{id}(id=${staff1.id})}">Chỉnh Sửa</a>
-                    <a th:href="@{#}">Xóa</a>
-                    <a th:href="@{/head-office/staff/{id}(id=${staff1.id})}">QL Bộ Môn</a>
+                    <a class="btn btn-primary" th:href="@{/trangchu/staffedit/{id}(id=${staff1.id})}">Chỉnh Sửa</a>
+                    <a class="btn btn-danger" th:href="@{/trangchu/staff-delete/{id}(id=${staff1.id})}">Xóa</a>
+                    <a class="btn btn-primary" th:href="@{/head-office/staff/{id}(id=${staff1.id})}">QL Bộ Môn</a>
                 </td>
 
                 </tbody>
             </table>
-            <div>
-                <span th:if="${staffPage.hasPrevious()}">
-                    <a th:href="@{/trangchu/staff(page=${staffPage.number - 1}, size=${staffPage.size})}">Previous</a>
-                </span>
-                <span th:each="i : ${#numbers.sequence(1, staffPage.totalPages)}">
-                    <a th:href="@{/trangchu/staff(page=${i - 1}, size=${staffPage.size})}"
-                       th:text="${i}">1</a>
-                </span>
-                <span th:if="${staffPage.hasNext()}">
-                    <a th:href="@{/trangchu/staff(page=${staffPage.number + 1}, size=${staffPage.size})}">Next</a>
-                </span>
+            <div class="d-flex justify-content-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${!staffPage.hasPrevious()}? 'disabled'">
+                            <a class="page-link" th:href="@{/trangchu/staff(page=${staffPage.number - 1}, size=${staffPage.size})}">Previous</a>
+                        </li>
+
+                        <li class="page-item" th:each="i : ${#numbers.sequence(1, staffPage.totalPages)}"
+                            th:classappend="${i == staffPage.number + 1} ? 'active'">
+                            <a class="page-link" th:href="@{/trangchu/staff(page=${i - 1}, size=${staffPage.size})}"
+                               th:text="${i}">1</a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${!staffPage.hasNext()}? 'disabled'">
+                            <a class="page-link" th:href="@{/trangchu/staff(page=${staffPage.number + 1}, size=${staffPage.size})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
+
         </div>
     </div>
 </div>

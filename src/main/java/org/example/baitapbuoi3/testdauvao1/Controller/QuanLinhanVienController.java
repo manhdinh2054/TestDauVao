@@ -55,8 +55,8 @@ public class QuanLinhanVienController {
         return "trangchudetail.html";
     }
 
-    @DeleteMapping("/staff-delete/{id}")
-    public String staffDelete(Model model, @PathVariable("id") UUID id) {
+    @GetMapping("/staff-delete/{id}")
+    public String staffDelete(@PathVariable("id") UUID id) {
         sti.deleteById(id);
         return "redirect:/trangchu/staff";
     }

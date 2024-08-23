@@ -35,7 +35,6 @@ public class QuanLiBoMonController {
         }else {
             model.addAttribute("staff", new Staff());
         }
-
         return "trangchuheadoffice";
     }
 }
