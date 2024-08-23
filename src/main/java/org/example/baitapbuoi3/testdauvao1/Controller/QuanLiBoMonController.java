@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,8 +27,11 @@ public class QuanLiBoMonController {
     @GetMapping("/staff/{id}")
     public String headOffice(Model model, @PathVariable("id") UUID id) {
         Optional<Staff> lst = sti.findById(id);
+        List<Object[]> lstbomon = sti.findFacilityDepartmentMajor(id);
+        model.addAttribute("staffbomon", lstbomon);
         if(lst.isPresent()){
             model.addAttribute("staff", lst.get());
+
         }else {
             model.addAttribute("staff", new Staff());
         }
