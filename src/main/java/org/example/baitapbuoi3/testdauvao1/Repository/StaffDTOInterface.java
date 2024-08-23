@@ -16,6 +16,6 @@ public interface StaffDTOInterface extends JpaRepository<StaffDTO, UUID> {
     @Query(value = "select staff_code as staffCode,name,account_fpt as accountFpt,account_fe as accountFe,status from staff",nativeQuery = true)
     List<StaffDTO> getAllNhanVien();
 
-    @Query(value = "select staff_code as staffCode,name,account_fpt as accountFpt,account_fe as accountFe,status from staff",nativeQuery = true)
+    @Query(value = "select id, staff_code as staffCode,name,account_fpt as accountFpt,account_fe as accountFe,status from staff",nativeQuery = true)
     Page<StaffDTO> getAllNhanVienpage(Pageable pageable);
 }

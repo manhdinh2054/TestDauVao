@@ -16,6 +16,7 @@ import java.util.UUID;
 @Entity
 public class StaffDTO {
     @Id
+    private UUID id;
     private String staffCode;
     private String name;
     private String accountFpt;

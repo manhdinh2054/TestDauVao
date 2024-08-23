@@ -87,7 +87,7 @@
                 <td th:text="${staff1.accountFe}"></td>
                 <td th:text="${staff1.status} == 1 ? 'Đang hoạt động':'Không hoạt động'"></td>
                 <td>
-                    <a th:href="@{#}">Chỉnh Sửa</a>
+                    <a th:href="@{/trangchu/staffedit/{id}(id=${staff1.id})}">Chỉnh Sửa</a>
                     <a th:href="@{#}">Xóa</a>
                     <a th:href="@{#}">Chi Tiết</a>
                 </td>
@@ -119,22 +119,24 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addForm" class="form-control" method="post" th:action="@{/trangchu/staff-add}">
+                <form id="addForm" class="form-control" method="post" th:object="${staff}" th:action="@{/trangchu/staff-add}">
                     <div class="mb-3">
                         <label for="staffCode" class="form-label">Mã nhân viên:</label>
-                        <input class="form-control" type="text" id="staffCode" name="staffCode" required>
+                        <input class="form-control" type="text" id="staffCode" name="staffCode" maxlength="15" required>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label">Tên:</label>
-                        <input class="form-control" type="text" id="name" name="name" required>
+                        <input class="form-control" type="text" id="name" name="name" maxlength="100" required>
                     </div>
                     <div class="mb-3">
                         <label for="accountFpt" class="form-label">Tài khoản FPT:</label>
-                        <input class="form-control" type="text" id="accountFpt" name="accountFpt" required>
+                        <input class="form-control" type="text" id="accountFpt" name="accountFpt" maxlength="100" required>
+                        <span th:if="${errors != null && errors.containsKey('accountFpt')}" th:text="${errors.get('accountFpt')}"></span>
                     </div>
                     <div class="mb-3">
                         <label for="accountFe" class="form-label">Tài khoản FE:</label>
-                        <input class="form-control" type="text" id="accountFe" name="accountFe" required>
+                        <input class="form-control" type="text" id="accountFe" name="accountFe" maxlength="100" required>
+                        <span th:if="${errors != null && errors.containsKey('accountFe')}" th:text="${errors.get('accountFe')}"></span>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Trạng thái:</label>
