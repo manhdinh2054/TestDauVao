@@ -94,3 +94,11 @@ h1, h2 {
     background: none;
     border: none;
 }
+.headofficestaff{
+    box-shadow: 0px 4px 8px #cccccc;
+    padding: 10px;
+    margin-top: 100px;
+}
+.headofficestaff div div{
+    padding-left:20px;
+}
